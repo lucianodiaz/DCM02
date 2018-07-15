@@ -1,0 +1,100 @@
+[gd_scene load_steps=6 format=1]
+
+[ext_resource path="res://scenes/DCM/dcm.gd" type="Script" id=1]
+[ext_resource path="res://sprites/DCM/dcm.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 28.5288
+
+[sub_resource type="Animation" id=2]
+
+resource/name = "active"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 1 ]
+}
+
+[sub_resource type="Animation" id=3]
+
+resource/name = "inactive"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 0 ]
+}
+
+[node name="dcm" type="KinematicBody2D" groups=[
+"dcm",
+]]
+
+transform/pos = Vector2( 7.41547, 8.4231 )
+transform/scale = Vector2( 0.235446, 0.233162 )
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.261509, -0.479317 )
+shapes/0/trigger = false
+collision/layers = 2
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+raycast_path = NodePath("raycast")
+is_ground = false
+cooldown_ground = 0.0
+active = false
+animplayer_path = NodePath("animplayer")
+
+[node name="sprite" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+hframes = 2
+
+[node name="collision" type="CollisionShape2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( -0.261509, -0.479317 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="animplayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/active = SubResource( 2 )
+anims/inactive = SubResource( 3 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="raycast" type="RayCast2D" parent="."]
+
+enabled = true
+cast_to = Vector2( 0, 30 )
+layer_mask = 1
+type_mask = 15
+
+

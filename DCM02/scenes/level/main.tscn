@@ -1,0 +1,138 @@
+[gd_scene load_steps=6 format=1]
+
+[ext_resource path="res://scenes/character/player/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/intermitente/platform.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/triggers/trigger.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/doors/door.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/pinches/pinche.tscn" type="PackedScene" id=5]
+
+[node name="main" type="Node"]
+
+[node name="player" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 135.546, 286.38 )
+MAX_SPEED = 200.0
+ACCELERATION = 18000.0
+DECELERATION = 15000.0
+JUMP_FORCE = 600.0
+bullet_angle = 340.0
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+
+visibility/visible = false
+transform/pos = Vector2( 4.45399, -16.3798 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 0.7, 0.7 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = true
+drag_margin/v_enabled = true
+smoothing/enable = true
+smoothing/speed = 10.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+
+[node name="StaticBody2D" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 49.5153, 332.132 )
+
+[node name="StaticBody2D9 2" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 55.0555, 68.4201 )
+
+[node name="StaticBody2D6" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 51.3203, 265.348 )
+
+[node name="StaticBody2D9 3" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 56.8605, 1.63608 )
+
+[node name="StaticBody2D7" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 52.2228, 199.465 )
+
+[node name="StaticBody2D9" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 57.763, -64.2469 )
+
+[node name="StaticBody2D8" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 53.3308, 134.091 )
+
+[node name="StaticBody2D9 4" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 58.871, -129.621 )
+
+[node name="StaticBody2D4 2" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 317.822, 332.132 )
+
+[node name="StaticBody2D43" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 586.128, 332.132 )
+
+[node name="StaticBody2D1" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 115.838, 332.132 )
+
+[node name="StaticBody2D4 3" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 384.145, 332.132 )
+
+[node name="StaticBody2D44" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 652.451, 332.132 )
+
+[node name="StaticBody2D2" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 182.161, 332.132 )
+
+[node name="StaticBody2D4 4" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 450.468, 332.132 )
+
+[node name="StaticBody2D45" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 718.774, 332.132 )
+
+[node name="StaticBody2D3" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 249.991, 333.64 )
+
+[node name="StaticBody2D4" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 518.298, 333.64 )
+
+[node name="StaticBody2D5" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 786.604, 333.64 )
+
+[node name="trigger" parent="." instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 263.453, 283.739 )
+transform/rot = 0.0395013
+id = null
+door_path = NodePath("../door")
+
+[node name="trigger 2" parent="." instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 372.597, 279.667 )
+id = 1
+door_path = NodePath("../door")
+
+[node name="door" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 454.047, 267.449 )
+
+[node name="pinche" parent="." instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 192.096, 283.076 )
+
+
