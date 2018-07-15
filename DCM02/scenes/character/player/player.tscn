@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=1]
+
+[ext_resource path="res://scenes/character/character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/character/player/player.gd" type="Script" id=2]
+[ext_resource path="res://scenes/DCM/dcm.tscn" type="PackedScene" id=3]
+[ext_resource path="res://sprites/player/player.png" type="Texture" id=4]
+
+[sub_resource type="CapsuleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 8.42654
+height = 20.0
+
+[node name="kinematic" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 0, 1.55585e+06 )
+collision/layers = 2
+script/script = ExtResource( 2 )
+preview_ingame = false
+preview_line_lenght = 5
+preview_line_count = 10
+sprite_path = NodePath("sprite")
+is_trigger = false
+can_use_tp = true
+dcm_scene = ExtResource( 3 )
+dcm_active = false
+dcm_spawn_path = NodePath("dcm_spawn")
+bullet_gravity = 5
+bullet_speed = 8
+bullet_angle = 350
+shooting = false
+canShoot = true
+dcm_direction = 1
+
+[node name="sprite" parent="."]
+
+texture = ExtResource( 4 )
+vframes = 3
+hframes = 3
+
+[node name="collision" parent="."]
+
+transform/pos = Vector2( 6.78536, -0.625 )
+
+[node name="dcm_spawn" type="Position2D" parent="."]
+
+transform/pos = Vector2( 19.7949, -4.875 )
+transform/scale = Vector2( -1, 1 )
+
+[node name="area" type="Area2D" parent="."]
+
+visibility/visible = false
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 2.58594 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="collision_trigger" type="CollisionShape2D" parent="area"]
+
+transform/pos = Vector2( 0, 2.58594 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[connection signal="body_enter" from="area" to="." method="_on_area_body_enter"]
+
+

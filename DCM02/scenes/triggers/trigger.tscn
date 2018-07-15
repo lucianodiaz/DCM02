@@ -1,0 +1,107 @@
+[gd_scene load_steps=6 format=1]
+
+[ext_resource path="res://scenes/triggers/trigger.gd" type="Script" id=1]
+[ext_resource path="res://sprites/triggers/triggers.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 20, 10 )
+
+[sub_resource type="Animation" id=2]
+
+resource/name = "active"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+
+resource/name = "inactive"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 1 ]
+}
+
+[node name="trigger" type="KinematicBody2D" groups=[
+"trigger",
+]]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 6.5 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+open = false
+cooldown = 0.0
+limit_cooldown = 5
+door_path = null
+label_path = NodePath("label")
+animplayer_path = NodePath("animplayer")
+
+[node name="sprite" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+vframes = 2
+
+[node name="collision" type="CollisionShape2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( 0, 6.5 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="animplayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/active = SubResource( 2 )
+anims/inactive = SubResource( 3 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="label" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -20.0
+margin/top = -30.0
+margin/right = 20.0
+margin/bottom = 1.0
+text = "0
+"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+
