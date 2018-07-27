@@ -143,7 +143,7 @@ func _input(event):
 		canShoot = false
 		preview_ingame = false
 		can_use_tp = true
-	if(event.is_action_released("shoot") && dcm_active):
+	if(event.is_action_released("shoot") && dcm_active && !is_trigger):
 		tp_to_dcm()
 	
 
@@ -229,7 +229,7 @@ func calculateMovement(delta):
 	speed_y += GRAVITY * delta
 	if(speed_y > MAX_FALL_SPEED):
 		speed_y = MAX_FALL_SPEED
-	velocity = (Vector2(speed_x * delta * direction,speed_y * delta))
+	velocity = (Vector2(speed_x * delta * direction, speed_y * delta))
 	var movement_remainded = move(velocity)
 	if (is_colliding()):
 		var normal = get_collision_normal()
@@ -284,14 +284,16 @@ func on_dcm_ready(pos,active):
 		can_use_tp = false
 		if(!dcm_active):
 			dcm_active = active
-		dcm_pos = pos
+			restart_dcm()
+			
+		if(dcm_active):
+			dcm_pos = pos
 
 func tp_to_dcm():
 	set_pos(Vector2(dcm_pos.x,dcm_pos.y - 15))
 	
 func _on_area_body_enter( body ):
 	var groups = body.get_groups()
-	
 	if(groups.has("dcm")):
 		body.free_dcm()
 		if(dcm_active):
@@ -302,10 +304,6 @@ func _on_area_body_enter( body ):
 		trigger = body
 		id_trigger = body.id
 		self.connect("trigger_activated",trigger,"active_trigger")
-	else:
-		is_trigger = false
-		trigger = null
-		id_trigger = null
 		#body.active_trigger()
 	if(groups.has("mortal")):
 		inst_death()
@@ -319,3 +317,10 @@ func restart_dcm():
 	set_scale(Vector2(1,1))
 	update_directional_force()
 	update()
+
+func _on_area_body_exit( body ):
+	var groups = body.get_groups()
+	if(groups.has("trigger")):
+		is_trigger = false
+		trigger = null
+		id_trigger = null

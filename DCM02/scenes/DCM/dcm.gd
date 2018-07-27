@@ -1,5 +1,8 @@
 extends KinematicBody2D
 
+
+export (float) var MAX_FALL_SPEED = 50
+
 #Gravity
 var _gravity
 
@@ -17,7 +20,7 @@ onready var raycast = get_node(raycast_path)
 #GROUND
 export (bool) var is_ground = false
 export (float) var cooldown_ground = 0.0
-var time_cooldown_ground = 8
+export (int) var time_cooldown_ground = 8
 #Active
 export (bool) var active = false
 
@@ -38,10 +41,13 @@ func shoot(directional_force, gravity):
 func _process(delta):
 	Is_grounded()
 	active_dcm()
+	
 func _fixed_process(delta):
 	#Simulate gravity
 	_movement.y +=delta * _gravity
-	
+	if(_movement.y >= MAX_FALL_SPEED):
+		emit_signal("dcm_ready",get_pos(),active)
+		queue_free()
 	#If colliding whit something
 	if(is_colliding()):
 		#get node that we are colliding with 
@@ -56,6 +62,7 @@ func _fixed_process(delta):
 		#forma del engine
 		_movement = normal.reflect(_movement) * bounce
 	#Move 
+	
 	move(_movement)
 	if(raycast.is_colliding()):
 		is_ground = true
