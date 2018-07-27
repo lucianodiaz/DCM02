@@ -56,9 +56,11 @@ collision/layers = 2
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
+MAX_FALL_SPEED = 50
 raycast_path = NodePath("raycast")
 is_ground = false
 cooldown_ground = 0.0
+time_cooldown_ground = 4
 active = false
 animplayer_path = NodePath("animplayer")
 
