@@ -5,8 +5,8 @@
 [sub_resource type="CapsuleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 16.1115
-height = 34.2769
+radius = 13.7101
+height = 38.014
 
 [node name="kinematic" type="KinematicBody2D"]
 

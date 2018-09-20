@@ -15,9 +15,10 @@ onready var collision = get_node(collision_path)
 
 export (int) var cant_keys = 2 setget set_cantkeys
 export (int) var current_keys = 0 setget set_currentkeys
-export (bool) var open = false
+export (bool) var open = false setget set_open
 
-
+func set_open(value):
+	open = value
 func set_cantkeys(value):
 	cant_keys = clamp(value,0,5)
 

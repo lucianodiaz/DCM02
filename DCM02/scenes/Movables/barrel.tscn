@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://scenes/Movables/Box.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Movables/barrel.gd" type="Script" id=2]
+[ext_resource path="res://sprites/Movables/barrel.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 28.1603
+
+[node name="barrel" instance=ExtResource( 1 )]
+
+script/script = ExtResource( 2 )
+MAX_SPEED = 600
+ACCELERATION = 1000
+puzzleNeed = false
+
+[node name="sprite" parent="."]
+
+texture = ExtResource( 3 )
+
+[node name="collision_a" parent="area"]
+
+transform/pos = Vector2( -1, -3 )
+
+[node name="damage" type="Area2D" parent="."]
+
+transform/pos = Vector2( -1, -3 )
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 4 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="collision_e" type="CollisionShape2D" parent="damage"]
+
+visibility/visible = false
+transform/pos = Vector2( 0, 4 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[connection signal="body_enter" from="damage" to="." method="_on_damage_body_enter"]
+
+

@@ -12,15 +12,31 @@ var _movement = Vector2()
 #Bounce
 var bounce = 0.4
 
+var init_once = false
+#Sprite
+export(NodePath) var sprite_path
+onready var sprite = get_node(sprite_path)
 
 #raycast
 export (NodePath) var raycast_path
 onready var raycast = get_node(raycast_path)
 
+#Particles
+export (NodePath) var particles_path
+onready var particles = get_node(particles_path)
+#Timer
+export (NodePath) var timer_path
+onready var timer = get_node(timer_path)
+
+export (NodePath) var timer_p_path
+onready var timer_p = get_node(timer_p_path)
+
+export (NodePath) var timer_q_path
+onready var timer_q = get_node(timer_q_path)
+
 #GROUND
 export (bool) var is_ground = false
-export (float) var cooldown_ground = 0.0
-export (int) var time_cooldown_ground = 8
+
 #Active
 export (bool) var active = false
 
@@ -30,6 +46,7 @@ onready var animplayer = get_node(animplayer_path)
 
 #Signal
 signal dcm_ready
+signal desactive_dcm
 
 func shoot(directional_force, gravity):
 	_movement = directional_force
@@ -40,7 +57,7 @@ func shoot(directional_force, gravity):
 	
 func _process(delta):
 	Is_grounded()
-	active_dcm()
+	#active_dcm()
 	
 func _fixed_process(delta):
 	#Simulate gravity
@@ -68,30 +85,50 @@ func _fixed_process(delta):
 		is_ground = true
 	else:
 		is_ground = false
-	#if(is_colliding()):
-#		if(_movement.x == 0):
-#			animplayer.play("active")
-#			if(!active):
-#				active = true
-#			emit_signal("dcm_ready",get_pos(),active)
-#		
-#		
-#	else:
-#		animplayer.play("inactive")
 	
 func Is_grounded():
 	if(is_ground):
-		cooldown_ground += 0.1
+		if(!init_once):
+			init_once = true
+			timer.start()
 	else:
-		cooldown_ground = 0
+		init_once = false
+		timer.stop()
 func active_dcm():
-	if(cooldown_ground >= time_cooldown_ground):
-		animplayer.play("active")
-		if(!active):
-			active = true
-		emit_signal("dcm_ready",get_pos(),active)
+	#if(cooldown_ground >= time_cooldown_ground):
+	animplayer.play("active")
+	if(!active):
+		active = true
+	emit_signal("dcm_ready",get_pos(),active,self)
 	
 func free_dcm():
 	if(active):
 		active = false
-		queue_free()
+		timer_q.start()
+
+func _on_timer_timeout():
+	active_dcm()
+
+
+func _on_area_body_enter( body ):
+	var groups = body.get_groups()
+	if(groups.has("mortal")):
+		emit_signal("desactive_dcm")
+		desactive()
+	
+func desactive():
+	timer_p.start()
+	particles.set_emitting(true)
+	sprite.hide()
+	active = false
+	set_fixed_process(false)
+	emit_signal("dcm_ready",get_pos(),active,null)
+
+func _on_timer_timeout_particles():
+	timer_p.stop()
+	queue_free()
+
+
+func _on_timer_q_timeout():
+	timer_q.stop()
+	queue_free()
