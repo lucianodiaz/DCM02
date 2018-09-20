@@ -1,0 +1,130 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://scenes/character/monster/monster.gd" type="Script" id=1]
+[ext_resource path="res://sprites/enemigo/enemigo.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 28.0155, 15.6445 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 50.4891, 10 )
+
+[node name="monster" type="KinematicBody2D" groups=[
+"enemigo",
+]]
+
+transform/pos = Vector2( 0, -4.54811 )
+transform/scale = Vector2( 1, 0.857871 )
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 15.0854 )
+shapes/0/trigger = false
+collision/layers = 2
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+MAX_SPEED = 135.0
+ACCELERATION = 700.0
+DECELERATION = 2000
+JUMP_FORCE = 450.0
+GRAVITY = 2000
+MAX_FALL_SPEED = 1000
+dir = null
+timer_path = NodePath("time_attack")
+sprite_path = NodePath("sprite")
+anim_path = NodePath("anim")
+raycast_l_path = NodePath("raycast_l")
+raycast_r_path = NodePath("raycast_r")
+raycast_d_l_path = NodePath("raycast_d_l")
+raycast_d_r_path = NodePath("raycast_d_r")
+speedx = 100.0
+
+[node name="sprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( 2.89871, -0.316579 )
+texture = ExtResource( 2 )
+
+[node name="collision" type="CollisionShape2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( 0, 15.0854 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="time_attack" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="raycast_r" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( 0, 11.6568 )
+enabled = true
+cast_to = Vector2( 30, 0 )
+layer_mask = 1
+type_mask = 15
+
+[node name="raycast_l" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( 0, 11.6568 )
+enabled = true
+cast_to = Vector2( -30, 0 )
+layer_mask = 1
+type_mask = 15
+
+[node name="attack" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0.263519, 10.444 )
+shapes/0/trigger = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="collision" type="CollisionShape2D" parent="attack"]
+
+transform/pos = Vector2( 0.263519, 10.444 )
+shape = SubResource( 2 )
+trigger = true
+_update_shape_index = 0
+
+[node name="anim" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="raycast_d_l" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( -28.9839, 15.6359 )
+enabled = true
+cast_to = Vector2( 0, 25 )
+layer_mask = 1
+type_mask = 15
+
+[node name="raycast_d_r" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( 29.0161, 15.6359 )
+enabled = true
+cast_to = Vector2( 0, 25 )
+layer_mask = 1
+type_mask = 15
+
+[connection signal="timeout" from="time_attack" to="." method="_on_time_attack_timeout"]
+
+[connection signal="body_enter" from="attack" to="." method="_on_attack_body_enter"]
+
+

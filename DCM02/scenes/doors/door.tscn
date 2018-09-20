@@ -68,6 +68,7 @@ hframes = 3
 script/script = ExtResource( 3 )
 kinematic_path = NodePath("kinematic")
 collision_path = NodePath("kinematic/collision")
+open = true
 
 [node name="animplayer" parent="."]
 
@@ -87,6 +88,7 @@ collision/margin = 0.08
 
 [node name="collision" type="CollisionShape2D" parent="kinematic"]
 
+visibility/visible = false
 shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 0

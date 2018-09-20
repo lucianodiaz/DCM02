@@ -10,7 +10,7 @@ export (float) var DECELERATION = 2000
 var move = false
 var m_dir = 0
 enum direction { RIGHT , LEFT}
-
+var gr
 var dir = direction.RIGHT 
 
 
@@ -21,12 +21,11 @@ var visto = false
 var velocity = Vector2()
 var speed_x = 0
 var speed_y = 0
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+export (bool) var puzzleNeed = false
 
 func _ready():
 	posIni = get_pos()
+	gr = GRAVITY
 	set_fixed_process(true)
 
 func _fixed_process(delta):
@@ -52,6 +51,7 @@ func _fixed_process(delta):
 		var final_movement = normal.slide(movement_remainded)
 		speed_y = normal.slide(Vector2(0,speed_y)).y
 		move(final_movement)
+		
 
 func _on_area_body_enter( body ):
 	var groups = body.get_groups()
@@ -72,9 +72,15 @@ func _on_area_body_exit( body ):
 
 
 func _on_visibilidad_exit_screen():
-	if(visto):
+	if(visto && puzzleNeed):
 		set_pos(posIni)
 
-
+func clawin( pos ):
+	GRAVITY = 0
+	set_pos(pos)
+	
+func clawOut():
+	GRAVITY = gr
+	
 func _on_visibilidad_enter_screen():
 	visto = true

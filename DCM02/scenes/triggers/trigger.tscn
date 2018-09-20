@@ -57,6 +57,7 @@ script/script = ExtResource( 1 )
 open = false
 cooldown = 0.0
 limit_cooldown = 5
+id = null
 door_path = null
 label_path = NodePath("label")
 animplayer_path = NodePath("animplayer")

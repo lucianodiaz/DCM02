@@ -21,10 +21,17 @@ func _ready():
 	if get_tree().is_editor_hint(): #para que haga draw sólo en tool mode
 		update()
 	else:
-		set_fixed_process(true)
 		update()
+	set_fixed_process(true)
 	
 	
+func _fixed_process(delta):
+
+	speed_y += GRAVITY * delta
+	if(speed_y > MAX_FALL_SPEED):
+		speed_y = MAX_FALL_SPEED
+	
+
 func _set_jump_speed(jf):
 	JUMP_FORCE = jf
 	update()
