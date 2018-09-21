@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://scenes/character/boruga/oruga.gd" type="Script" id=1]
-[ext_resource path="res://sprites/enemigo/bichoOruga/bichooruga.png" type="Texture" id=2]
+[ext_resource path="res://scenes/character/monster/baba.tscn" type="PackedScene" id=2]
+[ext_resource path="res://sprites/enemigo/bichoOruga/bichooruga.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -23,6 +24,16 @@ tracks/0/keys = {
 "transitions": FloatArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 5, 6, 7, 8, 9, 10, 7, 8, 9, 10 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Position2D:transform/pos")
+tracks/1/interp = 0
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -1, 24 ), Vector2( 9, 24 ), Vector2( 0, 24 ), Vector2( -6.11111, 24 ), Vector2( 0.527778, 24 ), Vector2( 9.30952, 24 ), Vector2( -0.408731, 24 ), Vector2( -6.52698, 24 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -90,14 +101,17 @@ raycast_r_path = NodePath("raycast_r")
 raycast_d_l_path = NodePath("raycast_d_l")
 raycast_d_r_path = NodePath("raycast_d_r")
 speedx = 10.0
+timer_at_path = NodePath("timer_at")
+point2d_path = NodePath("Position2D")
+baba = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
 transform/pos = Vector2( 0, 21 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 vframes = 4
 hframes = 3
-frame = 10
+frame = 7
 
 [node name="collision" type="CollisionShape2D" parent="."]
 
@@ -159,6 +173,7 @@ type_mask = 15
 
 [node name="attack" type="Area2D" parent="."]
 
+editor/display_folded = true
 input/pickable = true
 shapes/0/shape = SubResource( 5 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 52 )
@@ -175,10 +190,23 @@ shape = SubResource( 5 )
 trigger = true
 _update_shape_index = 0
 
+[node name="Position2D" type="Position2D" parent="."]
+
+transform/pos = Vector2( -1, 24 )
+
+[node name="timer_at" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 0.05
+one_shot = false
+autostart = false
+
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 
 [connection signal="body_enter" from="attack" to="." method="_on_attack_body_enter"]
 
 [connection signal="body_exit" from="attack" to="." method="_on_attack_body_exit"]
+
+[connection signal="timeout" from="timer_at" to="." method="_on_timer_at_timeout"]
 
 

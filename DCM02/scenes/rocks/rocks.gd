@@ -30,13 +30,16 @@ func _fixed_process(delta):
 
 func _on_collision_queue_body_enter( body ):
 	var groups = body.get_groups()
-	if(!groups.has("mortal")):
+	if(!groups.has("mortal") && !groups.has("dcm") && !groups.has("player") && !groups.has("enemigo")):
+		set_pos(init_pos)
+		set_fixed_process(false)
 		timer.start()
-		sprite.hide()
+		#sprite.hide()
 
 
 func _on_timer_timeout():
+	
 	speed_y = 0
+	set_fixed_process(true)
 	sprite.show()
-	set_pos(init_pos)
 	timer.stop()

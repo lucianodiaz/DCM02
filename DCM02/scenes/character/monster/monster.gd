@@ -11,6 +11,8 @@ var states = States.PATROL
 
 var prepare = false
 var collider = false
+var damage = 1
+var dead = false
 
 export (NodePath) var timer_path
 onready var timer = get_node(timer_path)
@@ -42,15 +44,31 @@ func _ready():
 	# Initialization here
 	speed_x = speedx
 	set_process(true)
-
+func get_damage():
+	return damage
 func _process(delta):
-	if(states == States.PATROL):
-		patrol(delta)
-	elif(states == States.ATTACK):
-		attack(delta)
-	elif(states == States.PREPARE):
-		prepare(delta)
+	if(!dead):
+		animation_handler()
+		if(states == States.PATROL):
+			patrol(delta)
+		elif(states == States.ATTACK):
+			attack(delta)
+		elif(states == States.PREPARE):
+			prepare(delta)
+	else:
+		if(!anim.get_current_animation() == "dead"):
+			anim.play("dead")
 	
+func animation_handler():
+	if(states == States.ATTACK):
+		if(!anim.get_current_animation() == "attack"):
+			anim.play("attack")
+	if(states == States.PATROL):
+		if(!anim.get_current_animation() == "walk"):
+			anim.play("walk")
+	if(states == States.PREPARE):
+		if(!anim.get_current_animation() == "idle"):
+			anim.play("idle")
 func _fixed_process(delta):
 	#Ya se esta ejecutando la gravedad en el PADRE
 	speed_x = clamp(speed_x, -MAX_SPEED, MAX_SPEED)
@@ -98,13 +116,11 @@ func attack(delta):
 
 func prepare( delta ):
 	if(!prepare):
-		print("prepare")
 		prepare = true
 
 func _on_time_attack_timeout():
 	states = States.ATTACK
 	prepare = false
-	print("ataque")
 	timer.stop()
 
 func _on_attack_body_enter( body ):
@@ -115,3 +131,11 @@ func _on_attack_body_enter( body ):
 		states = States.PREPARE
 		collider = true
 	
+
+func set_dead():
+	speed_x = 0
+	dead = true
+
+func _on_anim_finished():
+	if(anim.get_current_animation() == "dead"):
+		queue_free()

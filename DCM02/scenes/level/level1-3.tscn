@@ -44,9 +44,11 @@ __meta__ = {
 
 [node name="player" parent="." instance=ExtResource( 2 )]
 
-transform/pos = Vector2( -50.1267, -48.8331 )
+transform/pos = Vector2( -70.0408, -57.9076 )
 
 [node name="movables" type="Node" parent="."]
+
+editor/display_folded = true
 
 [node name="box 2" parent="movables" instance=ExtResource( 3 )]
 
@@ -103,7 +105,7 @@ transform/pos = Vector2( 506, -541 )
 
 [node name="oruga 2" parent="monsters" instance=ExtResource( 6 )]
 
-transform/pos = Vector2( 1477, -786 )
+transform/pos = Vector2( 1475.54, -786 )
 
 [node name="oruga 3" parent="monsters" instance=ExtResource( 6 )]
 
@@ -115,7 +117,12 @@ transform/pos = Vector2( 1717, -783 )
 
 [node name="oruga 4" parent="monsters" instance=ExtResource( 6 )]
 
+editor/display_folded = true
 transform/pos = Vector2( 1353, -1394 )
+
+[node name="attack" parent="monsters/oruga 4"]
+
+editor/display_folded = false
 
 [node name="collision" parent="monsters/oruga 4/attack"]
 
@@ -133,6 +140,23 @@ transform/pos = Vector2( 0, 27 )
 [node name="oruga 3 2" parent="monsters" instance=ExtResource( 6 )]
 
 transform/pos = Vector2( 1750, -1397 )
+
+[node name="oruga 5" parent="monsters" instance=ExtResource( 6 )]
+
+editor/display_folded = true
+transform/pos = Vector2( 537.496, -344.136 )
+
+[node name="oruga6" parent="monsters" instance=ExtResource( 6 )]
+
+editor/display_folded = true
+transform/pos = Vector2( 789.021, -341.92 )
+transform/rot = 0.0899044
+
+[node name="oruga7" parent="monsters" instance=ExtResource( 6 )]
+
+editor/display_folded = true
+transform/pos = Vector2( 701.851, -602.201 )
+transform/rot = 0.0899044
 
 [node name="brockeable" parent="." instance=ExtResource( 7 )]
 

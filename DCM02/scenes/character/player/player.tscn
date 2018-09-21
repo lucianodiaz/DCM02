@@ -5,19 +5,19 @@
 [ext_resource path="res://sprites/player/hero.png" type="Texture" id=3]
 [ext_resource path="res://sprites/DCM/dcm.png" type="Texture" id=4]
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=1]
 
 custom_solver_bias = 0.0
 radius = 13.7101
 height = 21.9978
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=2]
 
 custom_solver_bias = 0.0
 radius = 16.8551
 height = 32.7578
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=3]
 
 resource/name = "action"
 length = 0.6
@@ -34,7 +34,7 @@ tracks/0/keys = {
 "values": [ 24, 25, 26 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 
 resource/name = "fall"
 length = 1.0
@@ -51,7 +51,7 @@ tracks/0/keys = {
 "values": [ 13 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 
 resource/name = "hit"
 length = 1.0
@@ -68,9 +68,8 @@ tracks/0/keys = {
 "values": [ 4 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=6]
 
-resource/name = "idle"
 length = 1.0
 loop = true
 step = 0.1
@@ -85,9 +84,8 @@ tracks/0/keys = {
 "values": [ 1, 2, 3 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 
-resource/name = "jump"
 length = 1.0
 loop = false
 step = 0.1
@@ -102,7 +100,7 @@ tracks/0/keys = {
 "values": [ 12, 12 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 
 resource/name = "recharg"
 length = 1.0
@@ -119,9 +117,8 @@ tracks/0/keys = {
 "values": [ 24 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=9]
 
-resource/name = "walk"
 length = 1.2
 loop = true
 step = 0.1
@@ -142,7 +139,7 @@ tracks/0/keys = {
 
 transform/scale = Vector2( 0.9, 0.9 )
 input/pickable = false
-shapes/0/shape = SubResource( 2 )
+shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 2
@@ -163,6 +160,9 @@ on_air = false
 sprite_path = NodePath("sprite")
 sprite_dcm_path = NodePath("sprite/dcm")
 is_trigger = false
+life = 3
+shield = 0
+dead = false
 raycast_d_path = NodePath("raycast_d")
 raycast_h_path = NodePath("raycast_h")
 raycast_r_path = NodePath("raycast_r")
@@ -197,7 +197,7 @@ hframes = 2
 [node name="collision" type="CollisionShape2D" parent="."]
 
 visibility/visible = false
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
@@ -211,7 +211,7 @@ transform/pos = Vector2( 20.0584, -24.375 )
 
 editor/display_folded = true
 input/pickable = true
-shapes/0/shape = SubResource( 1 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, -1.05408, -0.125 )
 shapes/0/trigger = true
 gravity_vec = Vector2( 0, 1 )
@@ -226,7 +226,7 @@ __meta__ = {
 
 visibility/visible = false
 transform/pos = Vector2( -1.05408, -0.125 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 trigger = true
 _update_shape_index = 0
 
@@ -286,13 +286,13 @@ type_mask = 15
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/action = SubResource( 7 )
-anims/fall = SubResource( 5 )
-anims/hit = SubResource( 8 )
-anims/idle = SubResource( 3 )
-anims/jump = SubResource( 6 )
-anims/recharg = SubResource( 9 )
-anims/walk = SubResource( 4 )
+anims/action = SubResource( 3 )
+anims/fall = SubResource( 4 )
+anims/hit = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/jump = SubResource( 7 )
+anims/recharg = SubResource( 8 )
+anims/walk = SubResource( 9 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -301,5 +301,7 @@ autoplay = ""
 [connection signal="body_enter" from="area" to="." method="_on_area_body_enter"]
 
 [connection signal="body_exit" from="area" to="." method="_on_area_body_exit"]
+
+[connection signal="finished" from="anim" to="." method="_on_anim_finished"]
 
 
