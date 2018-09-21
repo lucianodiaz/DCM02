@@ -34,13 +34,13 @@ tile_data = IntArray( -262157, 2, -262156, 2, -262155, 2, -262154, 2, -262153, 2
 [node name="player" parent="." instance=ExtResource( 2 )]
 
 editor/display_folded = true
-transform/pos = Vector2( 14, 689 )
+transform/pos = Vector2( 664.623, 693.782 )
 MAX_SPEED = 180.0
 on_air = true
 
 [node name="monster" parent="." instance=ExtResource( 3 )]
 
-transform/pos = Vector2( 751, 705 )
+transform/pos = Vector2( 811.386, 662.457 )
 
 [node name="door" parent="." instance=ExtResource( 4 )]
 

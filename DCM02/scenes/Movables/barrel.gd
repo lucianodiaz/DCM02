@@ -13,5 +13,6 @@ func _ready():
 func _on_damage_body_enter( body ):
 	var groups = body.get_groups()
 	if(groups.has("enemigo")):
+		speed_x = 0
 		queue_free()
-		body.queue_free()
+		body.set_dead()

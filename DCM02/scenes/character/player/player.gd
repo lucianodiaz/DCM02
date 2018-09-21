@@ -55,6 +55,11 @@ onready var sprite_dcm = get_node(sprite_dcm_path)
 
 export (bool) var is_trigger = false
 
+export (int) var life = 3
+export (int) var shield = 0
+
+export (bool) var dead = false
+
 var trigger
 var id_trigger
 signal trigger_activated
@@ -169,6 +174,10 @@ func desactive_dcm():
 	dcm_active = false
 	dcm = null
 
+func logic_life():
+	if(life <= 0):
+		dead = true
+
 func _input(event):
 	if(event.is_action_pressed("cancel") && dcm != null):
 		restart_dcm()
@@ -194,6 +203,8 @@ func _input(event):
 	
 
 func _process(delta):
+	if(dead):
+		queue_free()
 	if(shooting):
 		fire_once()
 	animation_handler()
@@ -389,27 +400,37 @@ func _on_area_body_enter( body ):
 		if(dcm_active):
 			dcm_active = false
 			restart_dcm()
-			#sprite_dcm.show()
+			sprite_dcm.show()
 			dcm = null
-	if(groups.has("trigger")):
+	elif(groups.has("trigger")):
 		is_trigger = true
 		trigger = body
 		id_trigger = body.id
 		self.connect("trigger_activated",trigger,"active_trigger")
 		#body.active_trigger()
-	if(groups.has("mortal")):
+	elif(groups.has("mortal")):
 		inst_death()
 	
-	if(groups.has("batery")):
+	elif(groups.has("batery")):
 		aply_batery(body)
 	
-	if(groups.has("door") && batery):
+	elif(groups.has("door") && batery):
 		body.get_parent().open_the_door()
 		batery = false
-		
+	elif(groups.has("enemigo")):
+		hit = true
+		animE = AnimationTree.HIT
+		recived_damage(body.get_damage())
 	
 
-
+func recived_damage( value ):
+	if(shield > 0 && life > 0):
+		shield -= value
+	elif(shield <= 0):
+		if(life > 0):
+			life -= value
+		elif(life <= 0):
+			dead = true
 func aply_batery( body ):
 	if(!batery):
 		batery = true
@@ -423,7 +444,7 @@ func inst_death():
 
 func restart_dcm():
 	#dcm = null
-	sprite_dcm.show()
+	#sprite_dcm.show()
 	canShoot = true
 	dcm_direction = 1
 	input_direction = 1
@@ -439,4 +460,9 @@ func _on_area_body_exit( body ):
 		trigger = null
 		id_trigger = null
 	if(groups.has("mortal")):
+		hit = false
+
+
+func _on_anim_finished():
+	if(anim.get_current_animation() == "hit"):
 		hit = false
