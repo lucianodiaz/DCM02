@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://scenes/character/character.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 13.7101
+height = 38.014
+
+[node name="kinematic" type="KinematicBody2D"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+MAX_SPEED = 600
+ACCELERATION = 1000
+DECELERATION = 2000
+JUMP_FORCE = 500.0
+GRAVITY = 2000
+MAX_FALL_SPEED = 1000
+
+[node name="sprite" type="Sprite" parent="."]
+
+[node name="collision" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+

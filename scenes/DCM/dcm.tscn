@@ -1,0 +1,186 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://scenes/DCM/dcm.gd" type="Script" id=1]
+[ext_resource path="res://sprites/DCM/dcm.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 28.5288
+
+[sub_resource type="Animation" id=2]
+
+resource/name = "active"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 1 ]
+}
+
+[sub_resource type="Animation" id=3]
+
+resource/name = "inactive"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 0 ]
+}
+
+[sub_resource type="CircleShape2D" id=4]
+
+custom_solver_bias = 0.0
+radius = 28.8108
+
+[node name="dcm" type="KinematicBody2D" groups=[
+"dcm",
+]]
+
+transform/pos = Vector2( 7.41547, 8.4231 )
+transform/scale = Vector2( 0.235446, 0.233162 )
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.261509, -0.479317 )
+shapes/0/trigger = false
+collision/layers = 2
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+MAX_FALL_SPEED = 50
+sprite_path = NodePath("sprite")
+raycast_path = NodePath("raycast")
+particles_path = NodePath("particles")
+timer_path = NodePath("timer")
+timer_p_path = NodePath("particles/timer")
+timer_q_path = NodePath("timer_q")
+is_ground = false
+active = false
+animplayer_path = NodePath("animplayer")
+
+[node name="sprite" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+hframes = 2
+
+[node name="collision" type="CollisionShape2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( -0.261509, -0.479317 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="animplayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/active = SubResource( 2 )
+anims/inactive = SubResource( 3 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="raycast" type="RayCast2D" parent="."]
+
+enabled = true
+cast_to = Vector2( 0, 30 )
+layer_mask = 1
+type_mask = 15
+
+[node name="timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 0.5
+one_shot = false
+autostart = false
+
+[node name="area" type="Area2D" parent="."]
+
+editor/display_folded = true
+input/pickable = true
+shapes/0/shape = SubResource( 4 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.362099, 0 )
+shapes/0/trigger = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="collision" type="CollisionShape2D" parent="area"]
+
+transform/pos = Vector2( -0.362099, 0 )
+shape = SubResource( 4 )
+trigger = true
+_update_shape_index = 0
+
+[node name="particles" type="Particles2D" parent="."]
+
+transform/pos = Vector2( -0.362116, -3.65657 )
+transform/scale = Vector2( 3, 3 )
+config/amount = 120
+config/lifetime = 0.7
+config/time_scale = 0.7
+config/emit_timeout = 0.7
+config/emitting = false
+config/process_mode = 0
+config/explosiveness = 0.25
+params/direction = 0.0
+params/spread = 180.0
+params/linear_velocity = 30.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 8.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 5.0
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 2.0
+params/anim_initial_pos = 1.0
+
+[node name="timer" type="Timer" parent="particles"]
+
+process_mode = 1
+wait_time = 0.9
+one_shot = false
+autostart = false
+
+[node name="timer_q" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 0.1
+one_shot = false
+autostart = false
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
+
+[connection signal="body_enter" from="area" to="." method="_on_area_body_enter"]
+
+[connection signal="timeout" from="particles/timer" to="." method="_on_timer_timeout_particles"]
+
+[connection signal="timeout" from="timer_q" to="." method="_on_timer_q_timeout"]
+
+
