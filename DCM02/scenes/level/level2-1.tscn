@@ -1,0 +1,143 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://scenes/level/level2-1.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+script/script = ExtResource( 1 )
+timer_path = NodePath("timer")
+
+[node name="ColorFrame" type="ColorFrame" parent="."]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 8.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+color = Color( 0.367981, 0.257813, 1, 0.420745 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 8.0
+margin/top = 0.0
+margin/right = 1024.0
+margin/bottom = 748.0
+use_top_left = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 448.0
+margin/top = 367.0
+margin/right = 568.0
+margin/bottom = 381.0
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 120.0
+margin/bottom = 14.0
+alignment = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 120.0
+margin/bottom = 14.0
+use_top_left = false
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 120.0
+margin/bottom = 14.0
+text = "TO BE CONTINUED"
+align = 1
+valign = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="camera" type="Camera2D" parent="."]
+
+transform/pos = Vector2( 516.535, 377.378 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 0.5, 0.5 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = true
+drag_margin/v_enabled = true
+smoothing/enable = false
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+
+[node name="timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = false
+autostart = false
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
+
+

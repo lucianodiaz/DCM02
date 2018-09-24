@@ -17,3 +17,5 @@ func _process(delta):
 		if(!(animplayer.get_current_animation() == str(cant_keys))):
 			animplayer.play(str(current_keys))
 		collision.set_trigger(true)
+	else:
+		collision.set_trigger(false)

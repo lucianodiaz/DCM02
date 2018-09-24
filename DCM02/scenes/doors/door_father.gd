@@ -32,3 +32,8 @@ func open_the_door():
 func no_open_door():
 	if(!open):
 		current_keys -=1
+		
+
+func close_door():
+	open = false
+	current_keys = 0
