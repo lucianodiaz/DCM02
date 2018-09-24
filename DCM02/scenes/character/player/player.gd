@@ -30,6 +30,13 @@ var animE = AnimationTree.IDLE
 export (NodePath) var anim_path
 onready var anim = get_node(anim_path)
 
+export (NodePath) var cam_path
+onready var cam = get_node(cam_path)
+
+
+export (NodePath) var timer_path
+onready var timer = get_node(timer_path)
+
 var move
 var jump
 var fall
@@ -53,6 +60,10 @@ onready var sprite = get_node(sprite_path)
 export (NodePath) var sprite_dcm_path
 onready var sprite_dcm = get_node(sprite_dcm_path)
 
+
+
+
+
 export (bool) var is_trigger = false
 
 export (int) var life = 3
@@ -63,7 +74,7 @@ export (bool) var dead = false
 var trigger
 var id_trigger
 signal trigger_activated
-var batery
+export (bool) var batery = false
 
 
 export (NodePath) var raycast_d_path
@@ -77,6 +88,11 @@ onready var raycast_r = get_node(raycast_r_path)
 
 export (NodePath) var raycast_l_path
 onready var raycast_l = get_node(raycast_l_path)
+
+
+export (NodePath) var sound_path
+onready var sound = get_node(sound_path)
+
 
 #---------------------------Var-Character-----------------------------------#
 
@@ -158,6 +174,8 @@ func update_directional_force():
 #------------------------Empieza ready------------------------------
 func _ready():
 	#Update directional_force 
+	if(global.position != null ):
+		set_pos(global.position)
 	update_directional_force()
 	
 	#Enable user Input
@@ -168,7 +186,7 @@ func _ready():
 	
 	#Enable fix process
 	set_fixed_process(true)
-	
+	timer.start()
 	
 func desactive_dcm():
 	dcm_active = false
@@ -203,8 +221,10 @@ func _input(event):
 	
 
 func _process(delta):
+	if(life <= 0):
+		dead = true
 	if(dead):
-		queue_free()
+		hide()
 	if(shooting):
 		fire_once()
 	animation_handler()
@@ -280,6 +300,7 @@ func calculateMovement(delta):
 	var shoot = Input.is_action_pressed("shoot")
 	#mouse_pos = get_global_mouse_pos()
 	if(jump && !on_air && !hit):
+		sound.play("jump")
 		speed_y = - JUMP_FORCE
 		animE = AnimationTree.JUMP
 		
@@ -418,9 +439,11 @@ func _on_area_body_enter( body ):
 		body.get_parent().open_the_door()
 		batery = false
 	elif(groups.has("enemigo")):
-		hit = true
-		animE = AnimationTree.HIT
-		recived_damage(body.get_damage())
+		if(body.get_damage() > 0):
+			hit = true
+			animE = AnimationTree.HIT
+			recived_damage(body.get_damage())
+		
 	
 
 func recived_damage( value ):
@@ -429,8 +452,7 @@ func recived_damage( value ):
 	elif(shield <= 0):
 		if(life > 0):
 			life -= value
-		elif(life <= 0):
-			dead = true
+
 func aply_batery( body ):
 	if(!batery):
 		batery = true
@@ -438,8 +460,8 @@ func aply_batery( body ):
 	
 
 func inst_death():
-	hit = true
-	animE = AnimationTree.HIT
+	dead = true
+	hide()
 	
 
 func restart_dcm():
@@ -466,3 +488,17 @@ func _on_area_body_exit( body ):
 func _on_anim_finished():
 	if(anim.get_current_animation() == "hit"):
 		hit = false
+
+
+func desactiveCamera():
+	cam.clear_current()
+	
+	
+func activeCamera():
+	cam.make_current()
+	
+
+func _on_timer_timeout():
+	if(!dead):
+		print("timer")
+		global.position = get_pos()

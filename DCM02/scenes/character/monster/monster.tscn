@@ -13,7 +13,7 @@ extents = Vector2( 17.8537, 26.5369 )
 custom_solver_bias = 0.0
 extents = Vector2( 50.4891, 10 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 
 resource/name = "attack"
 length = 0.7
@@ -84,9 +84,8 @@ tracks/2/keys = {
 "values": [ 11 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=6]
 
-resource/name = "walk"
 length = 0.95
 loop = true
 step = 0.08
@@ -191,6 +190,7 @@ type_mask = 15
 
 [node name="attack" type="Area2D" parent="."]
 
+editor/display_folded = true
 visibility/visible = false
 input/pickable = true
 shapes/0/shape = SubResource( 2 )
@@ -213,10 +213,10 @@ _update_shape_index = 0
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/attack = SubResource( 6 )
+anims/attack = SubResource( 3 )
 anims/dead = SubResource( 4 )
 anims/idle = SubResource( 5 )
-anims/walk = SubResource( 3 )
+anims/walk = SubResource( 6 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]

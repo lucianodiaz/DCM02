@@ -26,7 +26,6 @@ func _ready():
 	
 	
 func _fixed_process(delta):
-
 	speed_y += GRAVITY * delta
 	if(speed_y > MAX_FALL_SPEED):
 		speed_y = MAX_FALL_SPEED

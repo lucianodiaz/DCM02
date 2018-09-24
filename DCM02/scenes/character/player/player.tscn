@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=1]
+[gd_scene load_steps=17 format=1]
 
 [ext_resource path="res://scenes/character/player/player.gd" type="Script" id=1]
 [ext_resource path="res://scenes/DCM/dcm.tscn" type="PackedScene" id=2]
 [ext_resource path="res://sprites/player/hero.png" type="Texture" id=3]
 [ext_resource path="res://sprites/DCM/dcm.png" type="Texture" id=4]
+[ext_resource path="res://assets/soundfx/jump_11.wav" type="Sample" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 
@@ -119,6 +120,23 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=9]
 
+resource/name = "shake"
+length = 0.2
+loop = true
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("camera:offset")
+tracks/0/interp = 0
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.05, 0.1, 0.15, 0.2 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 5, -6 ), Vector2( 10, -18 ), Vector2( -1, 29 ), Vector2( 30, -15 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+
 length = 1.2
 loop = true
 step = 0.1
@@ -131,6 +149,15 @@ tracks/0/keys = {
 "transitions": FloatArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 6, 7, 8, 9, 10, 11 ]
+}
+
+[sub_resource type="SampleLibrary" id=11]
+
+samples/jump = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 5 )
 }
 
 [node name="player" type="KinematicBody2D" groups=[
@@ -156,6 +183,8 @@ preview_ingame = false
 preview_line_lenght = 5
 preview_line_count = 10
 anim_path = NodePath("anim")
+cam_path = NodePath("camera")
+timer_path = NodePath("timer")
 on_air = false
 sprite_path = NodePath("sprite")
 sprite_dcm_path = NodePath("sprite/dcm")
@@ -163,10 +192,12 @@ is_trigger = false
 life = 3
 shield = 0
 dead = false
+batery = false
 raycast_d_path = NodePath("raycast_d")
 raycast_h_path = NodePath("raycast_h")
 raycast_r_path = NodePath("raycast_r")
 raycast_l_path = NodePath("raycast_l")
+sound_path = NodePath("sound")
 can_use_tp = true
 dcm_scene = ExtResource( 2 )
 dcm_active = false
@@ -185,7 +216,7 @@ transform/scale = Vector2( 3, 3 )
 texture = ExtResource( 3 )
 vframes = 5
 hframes = 6
-frame = 26
+frame = 24
 
 [node name="dcm" type="Sprite" parent="sprite"]
 
@@ -232,7 +263,8 @@ _update_shape_index = 0
 
 [node name="camera" type="Camera2D" parent="."]
 
-transform/pos = Vector2( 0, 1 )
+transform/pos = Vector2( 4.53451, -0.511542 )
+offset = Vector2( 10, -18 )
 anchor_mode = 1
 rotating = false
 current = true
@@ -292,16 +324,43 @@ anims/hit = SubResource( 5 )
 anims/idle = SubResource( 6 )
 anims/jump = SubResource( 7 )
 anims/recharg = SubResource( 8 )
-anims/walk = SubResource( 9 )
+anims/shake = SubResource( 9 )
+anims/walk = SubResource( 10 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
+
+[node name="timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = false
+autostart = false
+
+[node name="sound" type="SamplePlayer" parent="."]
+
+config/polyphony = 1
+config/samples = SubResource( 11 )
+default/volume_db = 0.0
+default/pitch_scale = 1.0
+default/pan = 0.0
+default/depth = 0.0
+default/height = 0.0
+default/filter/type = 0
+default/filter/cutoff = 5000.0
+default/filter/resonance = 1.0
+default/filter/gain = 1.0
+default/reverb_room = 2
+default/reverb_send = 0.0
+default/chorus_send = 0.0
 
 [connection signal="body_enter" from="area" to="." method="_on_area_body_enter"]
 
 [connection signal="body_exit" from="area" to="." method="_on_area_body_exit"]
 
 [connection signal="finished" from="anim" to="." method="_on_anim_finished"]
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 
 

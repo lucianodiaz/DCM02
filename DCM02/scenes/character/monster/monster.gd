@@ -45,7 +45,10 @@ func _ready():
 	speed_x = speedx
 	set_process(true)
 func get_damage():
-	return damage
+	if(!dead):
+		return damage
+	else:
+		return 0
 func _process(delta):
 	if(!dead):
 		animation_handler()
