@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://scenes/character/monster/baba.gd" type="Script" id=1]
+[ext_resource path="res://sprites/baba/baba2.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 6.58115, 16.3018 )
+
+[sub_resource type="Animation" id=2]
+
+resource/name = "dead"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=3]
+
+resource/name = "idle"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+
+custom_solver_bias = 0.0
+extents = Vector2( 9.15644, 21.1622 )
+
+[node name="baba" type="KinematicBody2D" groups=[
+"enemigo",
+]]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -7.08307, 0.643921 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+collision_path = NodePath("collision")
+anim_path = NodePath("anim")
+
+[node name="sprite" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+hframes = 2
+
+[node name="anim" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/dead = SubResource( 2 )
+anims/idle = SubResource( 3 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="collision" type="CollisionShape2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( -7.08307, 0.643921 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="damage" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 4 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -7.08308, 0 )
+shapes/0/trigger = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="collision" type="CollisionShape2D" parent="damage"]
+
+transform/pos = Vector2( -7.08308, 0 )
+shape = SubResource( 4 )
+trigger = true
+_update_shape_index = 0
+
+[connection signal="finished" from="anim" to="." method="_on_anim_finished"]
+
+[connection signal="body_enter" from="damage" to="." method="_on_damage_body_enter"]
+
+

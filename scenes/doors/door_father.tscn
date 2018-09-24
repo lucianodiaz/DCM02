@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://scenes/doors/door_father.gd" type="Script" id=1]
+
+[node name="door" type="Sprite" groups=[
+"door",
+]]
+
+script/script = ExtResource( 1 )
+animplayer_path = NodePath("animplayer")
+kinematic_path = null
+collision_path = null
+cant_keys = 2
+current_keys = 0
+open = false
+
+[node name="animplayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+

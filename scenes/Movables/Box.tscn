@@ -1,0 +1,82 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://scenes/Movables/Movables.gd" type="Script" id=1]
+[ext_resource path="res://sprites/Movables/box.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 22, 22 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 25, 14 )
+
+[node name="box" type="KinematicBody2D" groups=[
+"movable",
+]]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -1, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+GRAVITY = 500
+MAX_FALL_SPEED = 500
+MAX_SPEED = 100.0
+ACCELERATION = 500.0
+DECELERATION = 2000
+puzzleNeed = false
+
+[node name="sprite" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+
+[node name="collision" type="CollisionShape2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( -1, 0 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="area" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="collision_a" type="CollisionShape2D" parent="area"]
+
+shape = SubResource( 2 )
+trigger = true
+_update_shape_index = 0
+
+[node name="visibilidad" type="VisibilityNotifier2D" parent="."]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[connection signal="body_enter" from="area" to="." method="_on_area_body_enter"]
+
+[connection signal="body_exit" from="area" to="." method="_on_area_body_exit"]
+
+[connection signal="enter_screen" from="visibilidad" to="." method="_on_visibilidad_enter_screen"]
+
+[connection signal="exit_screen" from="visibilidad" to="." method="_on_visibilidad_exit_screen"]
+
+

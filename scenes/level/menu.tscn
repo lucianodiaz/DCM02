@@ -1,0 +1,240 @@
+[gd_scene load_steps=9 format=1]
+
+[ext_resource path="res://scenes/level/menu.gd" type="Script" id=1]
+[ext_resource path="res://sprites/UI/background.jpg" type="Texture" id=2]
+[ext_resource path="res://sprites/LOGO/logo.png" type="Texture" id=3]
+[ext_resource path="res://sprites/Menu/jugar,png.png" type="Texture" id=4]
+[ext_resource path="res://sprites/Menu/salir.png" type="Texture" id=5]
+[ext_resource path="res://sprites/Menu/selector.png" type="Texture" id=6]
+[ext_resource path="res://scenes/level/transition_back.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/music/menu.ogg" type="AudioStream" id=8]
+
+[node name="Menu" type="Control"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+script/script = ExtResource( 1 )
+selector_path = NodePath("selector")
+jugar_path = NodePath("MarginContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer/VBoxContainer/jugar")
+salir_path = NodePath("MarginContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer/VBoxContainer/Salir")
+offsetSalir = 40
+offsetJugar = 150
+transition_path = NodePath("transition_back")
+
+[node name="ColorFrame" type="ColorFrame" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 8.0
+margin/top = 0.0
+margin/right = 1024.0
+margin/bottom = 748.0
+color = Color( 0.0587769, 0.599146, 0.835938, 0.535529 )
+
+[node name="fondo" type="TextureFrame" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 8.0
+margin/top = 0.0
+margin/right = 1928.0
+margin/bottom = 922.0
+texture = ExtResource( 2 )
+stretch_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 8.0
+margin/top = 0.0
+margin/right = 1024.0
+margin/bottom = 748.0
+alignment = 0
+
+[node name="CenterContainer 2" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 1016.0
+margin/bottom = 134.0
+use_top_left = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer 2"]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 391.0
+margin/top = 0.0
+margin/right = 624.0
+margin/bottom = 134.0
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer 2/VBoxContainer"]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 233.0
+margin/bottom = 134.0
+alignment = 0
+
+[node name="TextureFrame" type="TextureFrame" parent="MarginContainer/VBoxContainer/CenterContainer 2/VBoxContainer/HBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 233.0
+margin/bottom = 134.0
+texture = ExtResource( 3 )
+stretch_mode = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 138.0
+margin/right = 1016.0
+margin/bottom = 362.0
+use_top_left = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer"]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 358.0
+margin/top = 0.0
+margin/right = 658.0
+margin/bottom = 224.0
+alignment = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 300.0
+margin/bottom = 224.0
+use_top_left = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 300.0
+margin/bottom = 224.0
+alignment = 0
+
+[node name="jugar" type="TextureFrame" parent="MarginContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 300.0
+margin/bottom = 110.0
+texture = ExtResource( 4 )
+stretch_mode = 0
+
+[node name="Salir" type="TextureFrame" parent="MarginContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 114.0
+margin/right = 300.0
+margin/bottom = 224.0
+texture = ExtResource( 5 )
+stretch_mode = 0
+
+[node name="selector" type="TextureFrame" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 366.0
+margin/top = 145.0
+margin/right = 666.0
+margin/bottom = 255.0
+texture = ExtResource( 6 )
+modulate = Color( 0.0559387, 0, 0.550781, 1 )
+stretch_mode = 0
+
+[node name="transition_back" parent="." instance=ExtResource( 7 )]
+
+visibility/visible = false
+
+[node name="music" type="StreamPlayer" parent="."]
+
+stream/stream = ExtResource( 8 )
+stream/play = true
+stream/loop = true
+stream/volume_db = 0.0
+stream/autoplay = true
+stream/paused = false
+stream/loop_restart_time = 0.0
+stream/buffering_ms = 500
+
+
