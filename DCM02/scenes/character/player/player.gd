@@ -177,7 +177,7 @@ func _ready():
 	if(global.position != null ):
 		set_pos(global.position)
 	update_directional_force()
-	
+	batery = global.batery
 	#Enable user Input
 	set_process_input(true)
 	
@@ -456,6 +456,7 @@ func recived_damage( value ):
 func aply_batery( body ):
 	if(!batery):
 		batery = true
+		global.batery = batery
 		body.queue_free()
 	
 
@@ -500,5 +501,5 @@ func activeCamera():
 
 func _on_timer_timeout():
 	if(!dead):
-		print("timer")
+		#print("timer")
 		global.position = get_pos()
