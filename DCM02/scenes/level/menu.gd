@@ -9,6 +9,10 @@ onready var selector = get_node(selector_path)
 export (NodePath) var jugar_path
 onready var jugar = get_node(jugar_path)
 
+export (NodePath) var anim_path
+onready var anim = get_node(anim_path)
+
+
 export (NodePath) var salir_path
 onready var salir = get_node(salir_path)
 export (int) var offsetSalir = 30
@@ -22,6 +26,7 @@ func _ready():
 	# Called every time the node is added to the scene.
 	set_process_input(true)
 	set_process(true)
+	anim.play("back")
 	
 func _input(event):
 	if(event.is_action_pressed("ui_up") ):
