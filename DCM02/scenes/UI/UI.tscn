@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://scenes/UI/UI.gd" type="Script" id=1]
 [ext_resource path="res://sprites/UI/barravida.png" type="Texture" id=2]
 [ext_resource path="res://sprites/UI/dcmui.png" type="Texture" id=3]
+[ext_resource path="res://sprites/batery/batery.png" type="Texture" id=4]
 
 [sub_resource type="Animation" id=1]
 
@@ -108,7 +109,6 @@ tracks/0/keys = {
 
 [node name="UI" type="Control"]
 
-editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -124,6 +124,7 @@ bvida_path = NodePath("MarginContainer/VBoxContainer/HBoxContainer/bvida")
 dcm_path = NodePath("MarginContainer/VBoxContainer/CenterContainer/HBoxContainer/dcm")
 anim_dcm_path = NodePath("anim_dcm")
 anim_bvida_path = NodePath("anim_bv")
+batery_path = NodePath("MarginContainer/VBoxContainer/CenterContainer/HBoxContainer 2/TextureFrame")
 player_path = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -180,7 +181,7 @@ size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 4.0
 margin/right = 1019.0
-margin/bottom = 4.0
+margin/bottom = 36.0
 use_top_left = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer"]
@@ -190,9 +191,9 @@ focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 509.0
-margin/top = 0.0
+margin/top = 16.0
 margin/right = 509.0
-margin/bottom = 0.0
+margin/bottom = 16.0
 alignment = 0
 
 [node name="dcm" type="Sprite" parent="MarginContainer/VBoxContainer/CenterContainer/HBoxContainer"]
@@ -201,6 +202,31 @@ texture = ExtResource( 3 )
 offset = Vector2( 0, 30 )
 vframes = 2
 frame = 1
+
+[node name="HBoxContainer 2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 493.0
+margin/top = 0.0
+margin/right = 525.0
+margin/bottom = 32.0
+alignment = 0
+
+[node name="TextureFrame" type="TextureFrame" parent="MarginContainer/VBoxContainer/CenterContainer/HBoxContainer 2"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 32.0
+margin/bottom = 32.0
+texture = ExtResource( 4 )
+stretch_mode = 0
 
 [node name="anim_bv" type="AnimationPlayer" parent="."]
 

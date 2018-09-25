@@ -11,6 +11,9 @@ onready var anim_dcm = get_node(anim_dcm_path)
 export (NodePath) var anim_bvida_path
 onready var anim_bvida = get_node(anim_bvida_path)
 
+export (NodePath) var batery_path
+onready var batery = get_node(batery_path)
+
 
 
 export (NodePath) var player_path
@@ -24,7 +27,10 @@ func _ready():
 	
 func _process(delta):
 	anim_bvida.play(str(player.life))
-	
+	if(player.batery):
+		batery.show()
+	elif(!player.batery):
+		batery.hide()
 	if(player.dcm_active):
 		anim_dcm.play("active")
 	elif(!player.dcm_active):
