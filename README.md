@@ -1,5 +1,3 @@
 # DCM02
 
-Hello, in this example i can see changes in the new branch.
-
-I'm exiting about this.
+Destructor y constructor molecular, juego en version alpha desarrollado para la materia #Programación de videojuegos 3
