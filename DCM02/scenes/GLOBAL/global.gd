@@ -7,6 +7,7 @@ var current_scene = 1
 var current_chapter = 1
 var scene_to_charge
 var position = null
+var batery = false
 #onready var scene_to_charge = preload("res://scenes/level/level"+str(current_chapter)+"-"+str(current_scene)+".tscn")
 func _ready():
 	pass
