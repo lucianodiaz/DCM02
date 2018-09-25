@@ -23,6 +23,7 @@ func _process(delta):
 	if(llego):
 		if(transition.get_done()):
 			global.position = null
+			global.batery = null
 			global.next_level()
 			global.change_scene()
 			
