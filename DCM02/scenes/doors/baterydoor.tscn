@@ -23,19 +23,11 @@ tracks/0/keys = {
 [node name="door" instance=ExtResource( 1 )]
 
 texture = ExtResource( 2 )
+frame = 6
 cant_keys = 1
-open = false
 
 [node name="animplayer" parent="."]
 
 anims/1 = SubResource( 1 )
-
-[node name="kinematic" parent="." groups=[
-"door",
-]]
-
-editor/display_folded = true
-
-[connection signal="timeout" from="timer" to="." method="_on_timer_timeout_new"]
 
 

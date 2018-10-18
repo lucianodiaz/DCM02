@@ -30,7 +30,6 @@ func open_the_door():
 		current_keys += 1
 
 func no_open_door():
-	if(!open):
 		current_keys -=1
 		
 

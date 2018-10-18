@@ -190,18 +190,21 @@ focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 509.0
-margin/top = 16.0
-margin/right = 509.0
-margin/bottom = 16.0
+margin/left = 502.0
+margin/top = -27.0
+margin/right = 502.0
+margin/bottom = -27.0
 alignment = 0
 
 [node name="dcm" type="Sprite" parent="MarginContainer/VBoxContainer/CenterContainer/HBoxContainer"]
 
+transform/pos = Vector2( 7.69183, 82.7941 )
 texture = ExtResource( 3 )
-offset = Vector2( 0, 30 )
 vframes = 2
 frame = 1
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="HBoxContainer 2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer"]
 
@@ -227,6 +230,9 @@ margin/right = 32.0
 margin/bottom = 32.0
 texture = ExtResource( 4 )
 stretch_mode = 0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="anim_bv" type="AnimationPlayer" parent="."]
 
