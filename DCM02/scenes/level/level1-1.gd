@@ -14,7 +14,7 @@ onready var music = get_node(music_path)
 
 var llego = false
 func _ready():
-	# Called every time the node is added to the scene.
+	music.play()
 	set_process(true)
 	global.current_scene = 1
 	

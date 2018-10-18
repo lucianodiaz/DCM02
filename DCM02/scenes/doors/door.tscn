@@ -68,7 +68,6 @@ hframes = 3
 script/script = ExtResource( 3 )
 kinematic_path = NodePath("kinematic")
 collision_path = NodePath("kinematic/collision")
-open = true
 
 [node name="animplayer" parent="."]
 
@@ -76,7 +75,9 @@ anims/0 = SubResource( 1 )
 anims/1 = SubResource( 2 )
 anims/2 = SubResource( 3 )
 
-[node name="kinematic" type="KinematicBody2D" parent="."]
+[node name="kinematic" type="KinematicBody2D" parent="." groups=[
+"door",
+]]
 
 input/pickable = false
 shapes/0/shape = SubResource( 4 )
@@ -92,5 +93,7 @@ visibility/visible = false
 shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 0
+
+[connection signal="finished" from="animplayer" to="." method="_on_animplayer_finished"]
 
 
